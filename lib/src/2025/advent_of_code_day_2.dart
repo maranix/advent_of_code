@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:convert' show utf8, LineSplitter;
-import 'dart:io';
-import 'dart:math';
+import 'dart:convert' show utf8;
 
 import 'package:advent_of_code/src/aoc_day.dart';
 
@@ -67,13 +65,8 @@ final class AdventOfCode2025Day2 extends AocDay {
                 final firstHalf = iStr.substring(0, mid);
                 final secondHalf = iStr.substring(mid, iStr.length);
 
-                // print(
-                //   "Range: $rangeStart - $rangeEnd, First Half: $firstHalf, Second Half: $secondHalf",
-                // );
-
                 // Only push numbers that match our condition of being invalid
                 if (firstHalf == secondHalf) {
-                  // print("\nInvalid Id $i in Range: $rangeStart - $rangeEnd");
                   sink.add(i);
                 }
               }
@@ -147,9 +140,6 @@ final class AdventOfCode2025Day2 extends AocDay {
                   mid -= 1;
 
                   if (containsRepeatingSequence) {
-                    print(
-                      "Sequence $possibleSequence Found $i repeating in range $rangeStart - $rangeEnd",
-                    );
                     sink.add(i);
                     break;
                   }

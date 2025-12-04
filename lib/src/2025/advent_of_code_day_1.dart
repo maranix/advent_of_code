@@ -5,6 +5,20 @@ import 'dart:convert';
 
 import 'package:advent_of_code/src/aoc_day.dart';
 
+enum DialRotationDirection {
+  l("L"),
+  r("R");
+
+  static DialRotationDirection fromString(String val) {
+    return DialRotationDirection.values.firstWhere(
+      (d) => d.direction == val.toUpperCase(),
+    );
+  }
+
+  final String direction;
+  const DialRotationDirection(this.direction);
+}
+
 final class AdventOfCode2025Day1 extends AocDay {
   const AdventOfCode2025Day1({
     required super.year,
@@ -16,25 +30,37 @@ final class AdventOfCode2025Day1 extends AocDay {
   // 0-99, 0 is inclusive hence 100 positions
   static const int _DIAL_TOTAL_POS = 100;
 
+  StreamTransformer<String, ({DialRotationDirection direction, int distance})>
+  _dialRotationSplitter() => StreamTransformer.fromHandlers(
+    handleData: (data, sink) {
+      final direction = DialRotationDirection.fromString(data[0]);
+      final distance = int.parse(data.substring(1));
+
+      sink.add((direction: direction, distance: distance));
+    },
+    handleError: (error, trace, sink) {
+      sink.addError(error, trace);
+    },
+
+    handleDone: (sink) {
+      sink.close();
+    },
+  );
+
   @override
   Future<String> part1() async {
     var dialPos = _DIAL_INITIAL_POS;
     final result = await loadInput()
         .transform(utf8.decoder)
         .transform(const LineSplitter())
-        .fold(0, (leftRotationZeroCount, line) {
-          final (rotationDirection, rotationDistance) = (
-            line[0],
-            int.tryParse(line.substring(1))!,
-          );
-
-          if (rotationDirection == "L") {
-            // Other way would be to do the following:
+        .transform(_dialRotationSplitter())
+        .fold(0, (leftRotationZeroCount, rotation) {
+          dialPos = switch (rotation.direction) {
+            // An alternative would be to do the following:
             // ((dialPos - rotationDistance) % _DIAL_TOTAL_POS + _DIAL_TOTAL_POS ) % _DIAL_TOTAL_POS)
-            dialPos = ((dialPos - rotationDistance) % 100).abs();
-          } else if (rotationDirection == "R") {
-            dialPos = (dialPos + rotationDistance) % _DIAL_TOTAL_POS;
-          }
+            .l => ((dialPos - rotation.distance) % 100).abs(),
+            .r => (dialPos + rotation.distance) % _DIAL_TOTAL_POS,
+          };
 
           if (dialPos == 0) {
             leftRotationZeroCount += 1;

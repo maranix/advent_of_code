@@ -7,7 +7,8 @@ enum ArgOption {
   day('day'),
   test('test'),
   partOne('part_one'),
-  partTwo('part_two');
+  partTwo('part_two'),
+  bench('bench');
 
   final String value;
 
@@ -24,6 +25,7 @@ void main(List<String> arguments) async {
   final useTestInput = argResult.flag(ArgOption.test.value);
   final partOne = argResult.flag(ArgOption.partOne.value);
   final partTwo = argResult.flag(ArgOption.partTwo.value);
+  final bench = argResult.flag(ArgOption.bench.value);
 
   final advent = switch (year) {
     '2025' => AdventOfCode2025(useTestInput: useTestInput),
@@ -31,6 +33,12 @@ void main(List<String> arguments) async {
       'Invalid year $year, This shouldn\'t have happened, something went horribly wrong.',
     ),
   };
+
+  Stopwatch? watch;
+
+  if (bench) {
+    watch = Stopwatch()..start();
+  }
 
   if (!partOne && !partTwo) {
     print(await advent.run(day));
@@ -42,6 +50,11 @@ void main(List<String> arguments) async {
 
   if (partTwo) {
     print(await advent.runPart2(day));
+  }
+
+  if (watch != null) {
+    watch.stop();
+    print("Took ${watch.elapsedMilliseconds}ms to run");
   }
 }
 
@@ -56,6 +69,7 @@ ArgParser setupArgs() {
     )
     ..addFlag(ArgOption.partOne.value, defaultsTo: false)
     ..addFlag(ArgOption.partTwo.value, defaultsTo: false)
+    ..addFlag(ArgOption.bench.value, defaultsTo: false)
     ..addOption(
       'year',
       abbr: 'y',
@@ -102,13 +116,12 @@ ArgParser setupArgs() {
           );
         }
 
-        final parsedDay = int.tryParse(day.substring(3));
-        if (parsedDay == null) {
-          throw ArgParserException(
-            "Please provide a valid integer `day` value",
-            [],
-            'day',
-          );
+        int? parsedDay;
+
+        if (day.startsWith("day")) {
+          parsedDay = int.parse(day.substring(3));
+        } else {
+          parsedDay = int.parse(day);
         }
 
         RangeError.checkValidRange(1, parsedDay, 31);
