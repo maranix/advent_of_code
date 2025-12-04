@@ -5,6 +5,7 @@ import 'package:advent_of_code/src/2025/advent_of_code_day_1.dart';
 import 'package:advent_of_code/src/2025/advent_of_code_day_2.dart';
 import 'package:advent_of_code/src/2025/advent_of_code_day_3.dart';
 import 'package:advent_of_code/src/2025/advent_of_code_day_4.dart';
+import 'package:advent_of_code/src/2025/advent_of_code_day_5.dart';
 
 final class AdventOfCode2025 extends AocYear {
   const AdventOfCode2025({super.year = "2025", super.useTestInput});
@@ -15,5 +16,6 @@ final class AdventOfCode2025 extends AocYear {
     December.day2: AdventOfCode2025Day2(year: year, useTestInput: useTestInput),
     December.day3: AdventOfCode2025Day3(year: year, useTestInput: useTestInput),
     December.day4: AdventOfCode2025Day4(year: year, useTestInput: useTestInput),
+    December.day5: AdventOfCode2025Day5(year: year, useTestInput: useTestInput),
   };
 }
