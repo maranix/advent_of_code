@@ -1,7 +1,4 @@
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:advent_of_code/src/aoc_day.dart';
+part of './advent_of_code_2025.dart';
 
 const List<List<int>> neighborOffsets = [
   [-1, -1], [-1, 0], [-1, 1], // Top row

@@ -1,9 +1,4 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:math' as math;
-
-import 'package:advent_of_code/src/aoc_day.dart';
+part of './advent_of_code_2025.dart';
 
 final class AdventOfCode2025Day3 extends AocDay {
   AdventOfCode2025Day3({

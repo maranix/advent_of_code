@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:benchmark_harness/benchmark_harness.dart';
-
 enum December {
   day1,
   day2,

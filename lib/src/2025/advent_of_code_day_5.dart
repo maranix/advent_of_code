@@ -1,9 +1,4 @@
-import 'dart:async';
-import 'dart:collection';
-import 'dart:convert';
-import 'dart:math' as math show max;
-
-import 'package:advent_of_code/src/aoc_day.dart';
+part of './advent_of_code_2025.dart';
 
 final class AdventOfCode2025Day5 extends AocDay {
   AdventOfCode2025Day5({

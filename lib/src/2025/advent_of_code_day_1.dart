@@ -1,9 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:advent_of_code/src/aoc_day.dart';
+part of './advent_of_code_2025.dart';
 
 enum DialRotationDirection {
   l("L"),

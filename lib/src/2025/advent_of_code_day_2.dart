@@ -1,7 +1,4 @@
-import 'dart:async';
-import 'dart:convert' show utf8;
-
-import 'package:advent_of_code/src/aoc_day.dart';
+part of './advent_of_code_2025.dart';
 
 final class AdventOfCode2025Day2 extends AocDay {
   const AdventOfCode2025Day2({
